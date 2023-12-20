@@ -25,8 +25,8 @@ namespace INVCAPP.Repository
         }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            
-            optionsBuilder.UseSqlServer(@"Data Source=NTBK-0029;Initial Catalog=INVCAPP;Integrated Security=True;TrustServerCertificate=True;");
+            //optionsBuilder.UseSqlServer(@"Data Source=NTBK-0029;Initial Catalog=INVCAPP;Integrated Security=True;TrustServerCertificate=True;");     
+            optionsBuilder.UseSqlServer(@"Data Source=DESKTOP-UELITFO\SQLEXPRESS;Initial Catalog=INVCAPP;Integrated Security=True;TrustServerCertificate=True;");
 
         }
 

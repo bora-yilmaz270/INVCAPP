@@ -11,6 +11,7 @@ namespace INVCAPP.Service.Mapping
             CreateMap<Invoice, InvoiceDto>().ReverseMap();
             CreateMap<InvoiceHeader, InvoiceHeaderDto>().ReverseMap();
             CreateMap<InvoiceLine, InvoiceLineDto>().ReverseMap();
+
             CreateMap<Invoice, InvoiceCreateDto>().ReverseMap();
             CreateMap<InvoiceHeader, InvoiceHeaderCreateDto>().ReverseMap();
             CreateMap<InvoiceLine, InvoiceLineCreateDto>().ReverseMap();
