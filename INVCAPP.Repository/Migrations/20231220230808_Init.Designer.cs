@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace INVCAPP.Repository.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20231220134941_init")]
-    partial class init
+    [Migration("20231220230808_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -34,6 +34,9 @@ namespace INVCAPP.Repository.Migrations
 
                     b.Property<int>("InvoiceHeaderId")
                         .HasColumnType("int");
+
+                    b.Property<bool>("IsEmailSent")
+                        .HasColumnType("bit");
 
                     b.Property<bool>("IsProcessed")
                         .HasColumnType("bit");

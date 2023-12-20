@@ -29,4 +29,17 @@ public class InvoiceRepository : IInvoiceRepository
             .Include(i => i.InvoiceLines)
             .SingleOrDefaultAsync(i => i.InvoiceHeader.InvoiceId == invoiceId);
     }
+    public async Task<IEnumerable<Invoice>> GetUnprocessedInvoicesAsync()
+    {
+        return await _context.Invoices
+            .Include(i => i.InvoiceHeader)
+            .Include(i => i.InvoiceLines)
+            .Where(i => !i.IsProcessed)
+            .ToListAsync();
+    }
+    public async Task UpdateInvoiceAsync(Invoice invoice)
+    {
+        _context.Invoices.Update(invoice);
+        await _context.SaveChangesAsync();
+    }
 }

@@ -7,5 +7,4 @@ public class InvoiceLineDto
     public int Quantity { get; set; }
     public string UnitCode { get; set; }
     public decimal UnitPrice { get; set; }
-    //public int InvoiceId { get; set; }
 }

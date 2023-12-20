@@ -5,7 +5,7 @@
 namespace INVCAPP.Repository.Migrations
 {
     /// <inheritdoc />
-    public partial class init : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -34,7 +34,8 @@ namespace INVCAPP.Repository.Migrations
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     InvoiceHeaderId = table.Column<int>(type: "int", nullable: false),
-                    IsProcessed = table.Column<bool>(type: "bit", nullable: false)
+                    IsProcessed = table.Column<bool>(type: "bit", nullable: false),
+                    IsEmailSent = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
