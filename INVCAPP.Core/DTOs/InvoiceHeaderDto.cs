@@ -1,6 +1,6 @@
 ﻿namespace INVCAPP.Core.DTOs;
 
-public class InvoiceHeaderDto: BaseDto
+public class InvoiceHeaderDto
 {
     public string InvoiceId { get; set; }
     public string SenderTitle { get; set; }

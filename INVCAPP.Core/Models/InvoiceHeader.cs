@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace INVCAPP.Core.Models;
+﻿namespace INVCAPP.Core.Models;
 
 public class InvoiceHeader : BaseEntity
 {

@@ -20,6 +20,7 @@ public class InvoiceService : IInvoiceService
     public async Task<CustomResponseDto<NoContentDto>> AddInvoiceAsync(InvoiceCreateDto invoiceCreateDto)
     {
         var invoice = _mapper.Map<Invoice>(invoiceCreateDto);
+        invoice.IsProcessed = new Random().Next(0, 2) > 0;
         await _invoiceRepository.AddInvoiceAsync(invoice);
         return CustomResponseDto<NoContentDto>.Success(204);
     }
