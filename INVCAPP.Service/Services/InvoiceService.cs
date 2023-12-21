@@ -3,6 +3,8 @@ using INVCAPP.Core.DTOs;
 using INVCAPP.Core.Models;
 using INVCAPP.Core.Repositories;
 using INVCAPP.Core.Services;
+using Microsoft.AspNetCore.Http;
+using Serilog;
 
 namespace INVCAPP.Service.Services;
 
@@ -19,36 +21,101 @@ public class InvoiceService : IInvoiceService
 
     public async Task<CustomResponseDto<NoContentDto>> AddInvoiceAsync(InvoiceCreateDto invoiceCreateDto)
     {
-        var invoice = _mapper.Map<Invoice>(invoiceCreateDto);
-        invoice.IsProcessed = new Random().Next(0, 2) > 0;
-        await _invoiceRepository.AddInvoiceAsync(invoice);
-        return CustomResponseDto<NoContentDto>.Success(204);
+        try
+        {
+            var invoice = _mapper.Map<Invoice>(invoiceCreateDto);
+
+            invoice.IsProcessed = new Random().Next(0, 2) > 0;
+
+            await _invoiceRepository.AddInvoiceAsync(invoice);
+
+            Log.Information("Fatura başarıyla eklendi: {@Invoice}", invoice);
+
+            return CustomResponseDto<NoContentDto>.Success(204);
+        }
+        catch (Exception ex)
+        {
+            Log.Error(ex, "Fatura ekleme işlemi sırasında bir hata meydana geldi: {@InvoiceCreateDto}", invoiceCreateDto);
+            var userFriendlyErrorMessage = "Bir sorun oluştu. Lütfen daha sonra tekrar deneyiniz.";
+            var errorResponse = CustomResponseDto<NoContentDto>.Fail(
+                StatusCodes.Status500InternalServerError,
+                new List<string> { userFriendlyErrorMessage }
+            );
+            return errorResponse;
+        }
     }
 
     public async Task<CustomResponseDto<List<InvoiceHeaderDto>>> GetAllInvoiceHeadersAsync()
     {
-        var invoiceHeaders = await _invoiceRepository.GetAllInvoiceHeadersAsync();
-        var invoiceHeadersDto = _mapper.Map<List<InvoiceHeaderDto>>(invoiceHeaders);
-        return CustomResponseDto<List<InvoiceHeaderDto>>.Success(200, invoiceHeadersDto);
+        try
+        {
+            var invoiceHeaders = await _invoiceRepository.GetAllInvoiceHeadersAsync();
+            var invoiceHeadersDto = _mapper.Map<List<InvoiceHeaderDto>>(invoiceHeaders);
+            Log.Information("Tüm fatura başlıkları başarıyla alındı.");
+            return CustomResponseDto<List<InvoiceHeaderDto>>.Success(200, invoiceHeadersDto);
+        }
+        catch (Exception ex)
+        {
+            Log.Error(ex, "Tüm fatura başlıklarını alma işlemi sırasında bir hata meydana geldi.");
+            var userFriendlyErrorMessage = "Bir sorun oluştu. Lütfen daha sonra tekrar deneyiniz.";
+            var errorResponse = CustomResponseDto<List<InvoiceHeaderDto>>.Fail(
+                StatusCodes.Status500InternalServerError,
+                new List<string> { userFriendlyErrorMessage }
+            );
+            return errorResponse;
+        }
     }
 
     public async Task<CustomResponseDto<InvoiceDto>> GetInvoiceDetailsAsync(string invoiceId)
     {
-        var invoice = await _invoiceRepository.GetInvoiceDetailsAsync(invoiceId);
-        if (invoice == null)
+        try
         {
-            return CustomResponseDto<InvoiceDto>.Fail(404, "Invoice not found.");
+            var invoice = await _invoiceRepository.GetInvoiceDetailsAsync(invoiceId);
+            if (invoice == null)
+            {
+                Log.Warning("Fatura bulunamadı. Fatura ID: {InvoiceId}", invoiceId);
+                return CustomResponseDto<InvoiceDto>.Fail(404, "Invoice not found.");
+            }
+            var invoiceDetailDto = _mapper.Map<InvoiceDto>(invoice);
+            Log.Information("Fatura detayları başarıyla alındı. Fatura ID: {InvoiceId}", invoiceId);
+            return CustomResponseDto<InvoiceDto>.Success(200, invoiceDetailDto);
         }
-        var invoiceDetailDto = _mapper.Map<InvoiceDto>(invoice);
-        return CustomResponseDto<InvoiceDto>.Success(200, invoiceDetailDto);
+        catch (Exception ex)
+        {
+            Log.Error(ex, "Fatura detayları alma işlemi sırasında bir hata meydana geldi. Fatura ID: {InvoiceId}", invoiceId);
+            var userFriendlyErrorMessage = "Bir sorun oluştu. Lütfen daha sonra tekrar deneyiniz.";
+            var errorResponse = CustomResponseDto<InvoiceDto>.Fail(
+                StatusCodes.Status500InternalServerError,
+                new List<string> { userFriendlyErrorMessage }
+            );
+
+            return errorResponse;
+        }
     }
     public async Task<IEnumerable<Invoice>> GetUnprocessedInvoicesAsync()
     {
-        var invoices = await _invoiceRepository.GetUnprocessedInvoicesAsync();
-        return invoices;
+        try
+        {
+            var invoices = await _invoiceRepository.GetUnprocessedInvoicesAsync();
+            Log.Information("İşlenmemiş faturalar başarıyla getirildi. Toplam Fatura Sayısı: {InvoiceCount}", invoices.Count());
+            return invoices;
+        }
+        catch (Exception ex)
+        {
+            Log.Error(ex, "İşlenmemiş faturaları getirme işlemi sırasında bir hata meydana geldi.");
+            return Enumerable.Empty<Invoice>();
+        }
     }
     public async Task UpdateInvoiceAsync(Invoice invoice)
     {
-        await _invoiceRepository.UpdateInvoiceAsync(invoice);
+        try
+        {
+            await _invoiceRepository.UpdateInvoiceAsync(invoice);
+            Log.Information("Fatura başarıyla güncellendi: {@Invoice}", invoice);
+        }
+        catch (Exception ex)
+        {
+            Log.Error(ex, "Fatura güncelleme işlemi sırasında bir hata meydana geldi: {@Invoice}", invoice);
+        }
     }
 }
