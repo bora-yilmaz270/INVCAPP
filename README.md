@@ -8,7 +8,7 @@ Ayrıca Emailjob ile işlenmemiş faturalar için müşterilere bilgilendirme ma
 - Yeni belge yükleme
 - Belge başlıklarının listelenmesi
 - Belge detaylarının sorgulanması
--Emailjob ile bilgilendirme maili gönderilmesi 
+- Emailjob ile bilgilendirme maili gönderilmesi 
 
 ## Kurulum
 1. Bu repoyu klonlayın: `git clone https://github.com/bora-yilmaz270/INVCAPP.git`
