@@ -63,7 +63,6 @@ namespace INVCAPP.ApiTest
             var objectResult = (ObjectResult)actionResult;
             Assert.Equal(objectResult.StatusCode, (int)System.Net.HttpStatusCode.Created);
         }
-
         [Fact]
         public async Task Create_Invoice_Created_Not_Ok()
         {
@@ -107,7 +106,6 @@ namespace INVCAPP.ApiTest
             Assert.Equal(objectResult.StatusCode, (int)System.Net.HttpStatusCode.BadRequest);
 
         }
-        
         [Fact]
         public async Task Get_All_InvoiceHeaders_OK()
         {
@@ -124,7 +122,6 @@ namespace INVCAPP.ApiTest
             Assert.Equal(objectResult.StatusCode, (int)System.Net.HttpStatusCode.OK);
             Assert.IsType<CustomResponseDto<List<InvoiceHeaderDto>>>(objectResult.Value);
         }
-
         [Fact]
         public async Task Get_InvoiceDetails_OK()
         {

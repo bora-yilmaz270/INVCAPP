@@ -1,9 +1,8 @@
 ﻿using INVCAPP.Core.DTOs;
-using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.AspNetCore.Mvc;
-using System.Text.RegularExpressions;
-using Azure;
 using Microsoft.AspNetCore.Http.HttpResults;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
+using System.Text.RegularExpressions;
 
 namespace INVCAPP.API.Validations
 {

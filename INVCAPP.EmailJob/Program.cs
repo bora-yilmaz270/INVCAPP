@@ -7,6 +7,7 @@ namespace INVCAPP.EmailJob
         public static void Main(string[] args)
         {
             IHost host = Host.CreateDefaultBuilder(args)
+                .UseWindowsService()
                 .ConfigureServices(services =>
                 {
 
@@ -14,7 +15,7 @@ namespace INVCAPP.EmailJob
                     services.ServiceBusiness();
                     services.AddAutoMapper(typeof(MapProfile));
 
-                }).UseWindowsService()
+                })
                 .Build();
             host.Run();
         }
