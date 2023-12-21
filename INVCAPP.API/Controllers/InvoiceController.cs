@@ -2,7 +2,6 @@
 using INVCAPP.Core.DTOs;
 using INVCAPP.Core.Services;
 using Microsoft.AspNetCore.Mvc;
-using Serilog;
 
 namespace INVCAPP.API.Controllers
 {
@@ -27,7 +26,6 @@ namespace INVCAPP.API.Controllers
         [HttpGet("headers")]
         public async Task<IActionResult> GetAllInvoiceHeaders()
         {
-            //Log.Information("Tüm fatura başlıklarını almak için GetAllInvoiceHeaders çağrıldı.");
             var result = await _invoiceService.GetAllInvoiceHeadersAsync();
             return CreateActionResult(result);
         }
