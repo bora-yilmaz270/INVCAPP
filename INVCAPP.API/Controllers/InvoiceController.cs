@@ -1,6 +1,8 @@
-﻿using INVCAPP.Core.DTOs;
+﻿using INVCAPP.API.Validations;
+using INVCAPP.Core.DTOs;
 using INVCAPP.Core.Services;
 using Microsoft.AspNetCore.Mvc;
+using Serilog;
 
 namespace INVCAPP.API.Controllers
 {
@@ -15,6 +17,7 @@ namespace INVCAPP.API.Controllers
         }
 
         [HttpPost]
+        [ValidateInvoiceCreateDto]
         public async Task<IActionResult> AddInvoice(InvoiceCreateDto invoiceCreateDto)
         {
             var result = await _invoiceService.AddInvoiceAsync(invoiceCreateDto);
@@ -24,6 +27,7 @@ namespace INVCAPP.API.Controllers
         [HttpGet("headers")]
         public async Task<IActionResult> GetAllInvoiceHeaders()
         {
+            //Log.Information("Tüm fatura başlıklarını almak için GetAllInvoiceHeaders çağrıldı.");
             var result = await _invoiceService.GetAllInvoiceHeadersAsync();
             return CreateActionResult(result);
         }
