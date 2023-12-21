@@ -31,7 +31,7 @@ public class InvoiceService : IInvoiceService
 
             Log.Information("Fatura başarıyla eklendi: {@Invoice}", invoice);
 
-            return CustomResponseDto<NoContentDto>.Success(204);
+            return CustomResponseDto<NoContentDto>.Success(201);
         }
         catch (Exception ex)
         {
