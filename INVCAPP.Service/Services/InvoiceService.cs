@@ -42,4 +42,13 @@ public class InvoiceService : IInvoiceService
         var invoiceDetailDto = _mapper.Map<InvoiceDto>(invoice);
         return CustomResponseDto<InvoiceDto>.Success(200, invoiceDetailDto);
     }
+    public async Task<IEnumerable<Invoice>> GetUnprocessedInvoicesAsync()
+    {
+        var invoices = await _invoiceRepository.GetUnprocessedInvoicesAsync();
+        return invoices;
+    }
+    public async Task UpdateInvoiceAsync(Invoice invoice)
+    {
+        await _invoiceRepository.UpdateInvoiceAsync(invoice);
+    }
 }

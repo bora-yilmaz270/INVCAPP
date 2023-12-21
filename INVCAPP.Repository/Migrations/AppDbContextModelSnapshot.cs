@@ -32,6 +32,9 @@ namespace INVCAPP.Repository.Migrations
                     b.Property<int>("InvoiceHeaderId")
                         .HasColumnType("int");
 
+                    b.Property<bool>("IsEmailSent")
+                        .HasColumnType("bit");
+
                     b.Property<bool>("IsProcessed")
                         .HasColumnType("bit");
 

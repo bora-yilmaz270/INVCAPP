@@ -10,5 +10,7 @@ namespace INVCAPP.Core.Models
         public InvoiceHeader InvoiceHeader { get; set; }
         public List<InvoiceLine> InvoiceLines { get; set; }
         public bool IsProcessed { get; set; }
+        public bool IsEmailSent { get; set; }
+
     }
 }
